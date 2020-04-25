@@ -3,3 +3,4 @@ Django>=2.0
 pillow
 django-cors-headers
 djangorestframework-api-key
+psycopg2
