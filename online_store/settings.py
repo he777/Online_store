@@ -25,7 +25,7 @@ SECRET_KEY = 'xe5th4ee21$l7yn0@&*mt0781%@wflh7o4)j+xys5z#51i3h-^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'online_store.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'store',
+        'USER': 'DarthVader',
+        'PASSWORD': 'DeathStar',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 
