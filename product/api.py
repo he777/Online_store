@@ -1,19 +1,19 @@
 from rest_framework import generics, viewsets, permissions
 
-from product.models import Category
-from .serializer import CategoriesSerializer
-
-# from .serializer import ProductSerializer
-# from product.models import Product
+from product.models import Category, Product
+from .serializer import CategoriesSerializer, ProductSerializer
 
 from rest_framework.generics import RetrieveAPIView
 
-"""
-class ProductViewSet(generics.ListAPIView):
+
+class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
+    permission_classes = [
+        permissions.AllowAny
+    ]
     serializer_class = ProductSerializer
 
-
+"""
 class ProductDetailViewSet(RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
