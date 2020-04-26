@@ -1,3 +1,4 @@
+'''
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -22,3 +23,5 @@ class CategoryTests(APITestCase):
         self.assertEqual(Product.objects.count(), 1)
         self.assertEqual(Product.objects.get().name, 'Category 1')
         self.assertEqual(Product.objects.get().comment, 'This is one category')
+
+'''

@@ -1,12 +1,7 @@
 version: '3'
 
 services:
-  db:
-    image: postgres:12.2
-    environment:
-      - POSTGRES_DB=store
-      - POSTGRES_USER=DarthVader
-      - POSTGRES_PASSWORD=DeathStar
+
   web:
     container_name: online_store
     build: .
@@ -17,6 +12,19 @@ services:
       - "8000:8000"
     depends_on:
       - db
-    links:
-      - db:db
+    networks:
+      - neti
 
+  db:
+    image: postgres:12.2
+    environment:
+      - POSTGRES_DB=store
+      - POSTGRES_USER=DarthVader
+      - POSTGRES_PASSWORD=DeathStar
+    networks:
+      neti:
+        aliases:
+        - neti_heki
+
+networks:
+  neti:

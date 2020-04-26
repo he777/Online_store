@@ -7,7 +7,7 @@ class Category(models.Model):
     Stores a a Category model, related to Product
     """
     name = models.CharField(max_length=200)
-    parent_id = models.CharField(max_length=20)
+    # parent_id = models.CharField(max_length=20)
     comment = models.CharField(blank=True, null=True, max_length=200)
 
     def __str__(self):
