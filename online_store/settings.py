@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'product'
+    'product',
+    'account.apps.AccountConfig',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Override Django's default user model.
+AUTH_USER_MODEL = 'account.Account'
+
+# models.ImageField() saves to MEDIA_ROOT
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
