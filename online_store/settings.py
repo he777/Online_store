@@ -125,14 +125,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
 # Override Django's default user model.
 AUTH_USER_MODEL = 'account.Account'
 
-
-""":type
-docker-compose exec web python manage.py migrate admin zero
-python manage.py migrate auth zero
-python manage.py migrate contenttypes zero
-python manage.py migrate sessions zero
-"""
+# models.ImageField() saves to MEDIA_ROOT
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

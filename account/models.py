@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+import uuid
 
 
 class AccountManager(BaseUserManager):
@@ -18,9 +19,7 @@ class AccountManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, username, password):
-        user = self.create_user(email=email,
-                                username=username,
-                                password=password)
+        user = self.create_user(email=email, username=username, password=password)
         if not password:
             raise ValueError("Superuser must have a password")
         user.is_staff = True
@@ -30,16 +29,23 @@ class AccountManager(BaseUserManager):
         return user
 
 
-
 class Account(AbstractBaseUser):
     email           = models.EmailField(verbose_name="email", max_length=60, unique=True)
     username        = models.CharField(max_length=30, unique=True)
+    avatar          = models.ImageField(upload_to='account/img/{0}/'.format(uuid.uuid4()), default=None, null=True)
+
     date_joined     = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login      = models.DateTimeField(verbose_name="last login", auto_now=True)
+
     is_active       = models.BooleanField(default=True)
     is_staff        = models.BooleanField(default=False)
     is_admin        = models.BooleanField(default=False)
     is_superuser    = models.BooleanField(default=False)
+
+    street          = models.CharField(max_length=50, blank=True, null=True)
+    zip_code        = models.CharField(max_length=10, blank=True, null=True)
+    city            = models.CharField(max_length=50, blank=True, null=True)
+    country         = models.CharField(max_length=50, blank=True, null=True)
 
     # USERNAME_FIELD is used to log in
     USERNAME_FIELD  = "email"
