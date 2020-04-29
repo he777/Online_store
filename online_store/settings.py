@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'product'
+    'product',
+    'account.apps.AccountConfig',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +124,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Override Django's default user model.
+AUTH_USER_MODEL = 'account.Account'
+
+
+""":type
+docker-compose exec web python manage.py migrate admin zero
+python manage.py migrate auth zero
+python manage.py migrate contenttypes zero
+python manage.py migrate sessions zero
+"""

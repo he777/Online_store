@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+
+from account.models import Account
 
 
 class Category(models.Model):
@@ -24,7 +25,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=12, decimal_places=2)
     quantity = models.DecimalField(max_digits=20, decimal_places=6, null=True)
     comment = models.CharField(blank=True, null=True, max_length=200)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(Account, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, related_name='category', on_delete=models.CASCADE)
 
     def __str__(self):
