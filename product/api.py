@@ -1,8 +1,9 @@
 from rest_framework import generics, viewsets, permissions
 
-from product.models import Category, Product, OrderItem, Order
-from .serializer import CategoriesSerializer, ProductSerializer, OrderSerializer, OrderItemSerializer
-
+from product.models import Category, Product, Order
+from .serializer import CategoriesSerializer, ProductSerializer, OrderSerializer\
+    # , OrderItemSerializer
+# , OrderItem,
 from rest_framework.generics import RetrieveAPIView
 
 
@@ -42,11 +43,3 @@ class OrderViewSet(viewsets.ModelViewSet):
         permissions.AllowAny
     ]
     serializer_class = OrderSerializer
-
-
-class OrderItemViewSet(viewsets.ModelViewSet):
-    queryset = OrderItem.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-    ]
-    serializer_class = OrderItemSerializer

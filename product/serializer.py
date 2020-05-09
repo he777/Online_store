@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from product.models import Category, Product, OrderItem, Order
+from product.models import Category, Product, Order
 
 
 class CategoriesSerializer(serializers.ModelSerializer):
@@ -21,17 +21,13 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class OrderItemSerializer(serializers.ModelSerializer):
-    total_cost = serializers.FloatField()
-
-    class Meta:
-        model = OrderItem
-        fields = ('user', 'product', 'quantity', 'comment', 'total_cost')
-
-
 class OrderSerializer(serializers.ModelSerializer):
-    total = serializers.FloatField()
+    total_cost = serializers.FloatField()
+    delivery = serializers.FloatField()
 
     class Meta:
         model = Order
-        fields = ('user', 'delivery_address', 'date_of_order', 'order_lines', 'status', 'order_time', 'comment', 'total')
+        fields = ('user', 'delivery_address', 'date_of_order', 'status', 'order_time', 'delivery', 'total_cost')
+
+
+

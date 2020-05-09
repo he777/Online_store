@@ -1,12 +1,11 @@
 from django.db import models
 
-import product
 from account.models import Account
 
 
 class Category(models.Model):
     """
-    Stores a a Category model, related to Product
+    Class to represent Category
     """
     name = models.CharField(max_length=200)
     comment = models.CharField(blank=True, null=True, max_length=200)
@@ -17,8 +16,9 @@ class Category(models.Model):
 
 class Product(models.Model):
     """
-        Stores a a Products model, related to Category
+    Class to represent Product
     """
+
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=3000)
     image_url = models.URLField(max_length=1000)
@@ -33,49 +33,56 @@ class Product(models.Model):
         return self.name
 
 
-class OrderItem(models.Model):
-    user = models.ForeignKey(Account, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.FloatField()
-    comment = models.CharField(blank=True, null=True, max_length=200)
-
-    def __str__(self):
-        return str(self.product)
-
-    @classmethod
-    def total_cost(cls):
-        return cls.quantity * cls.product.price
-
-
 STATUS = (
-    ('str', 'started'),
+    ('star', 'started'),
     ('prog', 'in_progress'),
-    ('can', 'canceled'),
-    ('fin', 'finished'))
+    ('canc', 'canceled'),
+    ('fini', 'finished'))
 
 
 class Order(models.Model):
     """
-        Stores Order model
+        Class to represent Order
     """
-    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, default=Account)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.FloatField(default=1)
+    comment = models.CharField(blank=True, null=True, max_length=200)
     delivery_address = models.CharField(max_length=50)
     delivery_price = models.FloatField(default=2.90)
     date_of_order = models.DateTimeField(auto_now_add=True)
-    order_lines = models.ManyToManyField(OrderItem)
     status = models.CharField(choices=STATUS, max_length=4, default=STATUS[0][0])
     order_time = models.DateTimeField(blank=True, auto_now=True)
-    comment = models.CharField(blank=True, null=True, max_length=200)
 
     def __str__(self):
         return str(self.pk)
 
     @property
-    def price(self):
-        if OrderItem.total_cost.__ge__(50.0):
-            self.delivery_price = 0
-            return self.delivery_price
+    def total_cost(self) -> float:
+        """
+         :rtype: float
+         :returns: ordered product quantity multiplied by product item price
+        """
+        return self.quantity * self.product.price
 
     @property
-    def total(self):
-        return self.price + OrderItem.total_cost()
+    def delivery(self, delivery_price=2.90) -> float:
+        """
+            :type delivery_price: float
+            :param delivery_price: default delivery expanse
+            :rtype: float
+            :returns: delivery price based on purchases sum
+        """
+        new_delivery_price = 0.0
+        if self.total_cost > 50.0:
+            return new_delivery_price
+        else:
+            return delivery_price
+
+    @property
+    def total(self) -> float:
+        """
+            :rtype: float
+            :returns: total price for order
+        """
+        return self.delivery + self.total_cost
