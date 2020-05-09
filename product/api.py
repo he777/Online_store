@@ -1,7 +1,7 @@
 from rest_framework import generics, viewsets, permissions
 
-from product.models import Category, Product
-from .serializer import CategoriesSerializer, ProductSerializer
+from product.models import Category, Product, OrderItem, Order
+from .serializer import CategoriesSerializer, ProductSerializer, OrderSerializer, OrderItemSerializer
 
 from rest_framework.generics import RetrieveAPIView
 
@@ -12,6 +12,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         permissions.AllowAny
     ]
     serializer_class = ProductSerializer
+
 
 """
 class ProductDetailViewSet(RetrieveAPIView):
@@ -33,3 +34,19 @@ class CategoriesDetailViewSet(RetrieveAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoriesSerializer
 """
+
+
+class OrderViewSet(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = OrderSerializer
+
+
+class OrderItemViewSet(viewsets.ModelViewSet):
+    queryset = OrderItem.objects.all()
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    serializer_class = OrderItemSerializer
