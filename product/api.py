@@ -1,14 +1,13 @@
-from rest_framework import generics, viewsets, permissions
+from rest_framework import viewsets, permissions
 
+from .filters import ProductFilter
 from product.models import Category, Product, Order
-from .serializer import CategoriesSerializer, ProductSerializer, OrderSerializer\
-    # , OrderItemSerializer
-# , OrderItem,
-from rest_framework.generics import RetrieveAPIView
+from .serializer import CategoriesSerializer, ProductSerializer, OrderSerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
+    filter_class = ProductFilter
     permission_classes = [
         permissions.AllowAny
     ]
