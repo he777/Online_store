@@ -40,7 +40,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'product',
     'account.apps.AccountConfig',
+    'django_filters',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -77,13 +84,17 @@ WSGI_APPLICATION = 'online_store.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'store',
-        'USER': 'DarthVader',
-        'PASSWORD': 'DeathStar',
-        'HOST': 'db',
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+    #'default': {
+    #    'ENGINE': 'django.db.backends.postgresql',
+    #    'NAME': 'store',
+    #    'USER': 'DarthVader',
+    #    'PASSWORD': 'DeathStar',
+    #    'HOST': 'db',
+    #    'PORT': 5432,
+    #}
 }
 
 
