@@ -83,18 +83,15 @@ WSGI_APPLICATION = 'online_store.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
+
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'store',
+        'USER': 'DarthVader',
+        'PASSWORD': 'DeathStar',
+        'HOST': 'db',
+        'PORT': 5432,
     }
-    #'default': {
-    #    'ENGINE': 'django.db.backends.postgresql',
-    #    'NAME': 'store',
-    #    'USER': 'DarthVader',
-    #    'PASSWORD': 'DeathStar',
-    #    'HOST': 'db',
-    #    'PORT': 5432,
-    #}
 }
 
 

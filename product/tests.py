@@ -1,8 +1,7 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from product.models import Product
-from product.models import Category
+from product.models import Product, Category
 from account.models import Account
 
 
@@ -55,7 +54,6 @@ class ProductFilterTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(json), 1)
         self.assertEqual(json[0]["name"], "Another 2")
-
 
     def test_filtering_by_name(self):
 
