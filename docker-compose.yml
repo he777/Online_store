@@ -2,9 +2,23 @@ version: '3'
 
 services:
 
+  api:
+    container_name: api_online_store
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - neti
+
   web:
     container_name: online_store
-    build: .
+    build:
+      context: .
+      dockerfile: web.Dockerfile
     command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/online_store
@@ -14,6 +28,22 @@ services:
       - db
     networks:
       - neti
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    command: npm start
+    volumes:
+      - .:/frontend
+      - /frontend/node_modules
+    ports:
+      - '3001:3000'
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - web
 
   db:
     image: postgres:12.2
