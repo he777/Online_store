@@ -1,11 +1,20 @@
+# Django
 Django==3.0.5
 djangorestframework==3.11
-pillow==7.1.2
 django-cors-headers==3.2.1
 djangorestframework-api-key==2.0.0
+django-filter==2.2.0
+
+# Database
 psycopg2==2.8.5
+
 psycopg2-binary
 
 # General
 pillow==7.1.2
 gunicorn==19.3.0
+# psycopg2-binary
+
+# General
+pillow==7.1.2
+

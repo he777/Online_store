@@ -8,6 +8,8 @@ class Category(models.Model):
     Class to represent Category
     """
     name = models.CharField(max_length=200)
+    image = models.URLField(max_length=1000, null=True)
+    is_active = models.BooleanField(default=True)
     comment = models.CharField(blank=True, null=True, max_length=200)
 
     def __str__(self):
@@ -21,7 +23,7 @@ class Product(models.Model):
 
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=3000)
-    image_url = models.URLField(max_length=1000)
+    image_url = models.URLField(max_length=1000, default=None)
     inventory = models.CharField(max_length=300)
     price = models.FloatField()
     comment = models.CharField(blank=True, null=True, max_length=200)
@@ -69,9 +71,9 @@ class Order(models.Model):
     def delivery(self, delivery_price=2.90) -> float:
         """
             :type delivery_price: float
-            :param delivery_price: default delivery expanse
+            :param delivery_price: default delivery expanse if order is over > [someprice]
             :rtype: float
-            :returns: delivery price based on purchases sum
+            :returns: delivery price based on purchases sum discount
         """
         new_delivery_price = 0.0
         if self.total_cost > 50.0:
@@ -83,6 +85,7 @@ class Order(models.Model):
     def total(self) -> float:
         """
             :rtype: float
-            :returns: total price for order
+            :returns: total price for order with delivery price included
         """
         return self.delivery + self.total_cost
+
