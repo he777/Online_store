@@ -13,11 +13,30 @@ RUN apt install -y libpq-dev python-dev
 ENV PYTHONDONTWRITEBYTECODE 1
 # Prevents Python from buffering stdout and stderr
 ENV PYTHONUNBUFFERED 1
+ENV PATH /usr/local/bin:$PATH
 
-
+# set working directory
 RUN mkdir /online_store
 WORKDIR /online_store
 
 COPY requirements.txt /online_store/
 RUN pip3 install -r requirements.txt
 COPY . /online_store/
+
+#Node for frontend build
+FROM node:12.2.0-alpine
+
+# set working directory
+RUN mkdir /frontend
+WORKDIR /frontend
+
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /frontend/node_modules/.bin:$PATH
+
+# install and cache app dependencies
+COPY ./frontend/package*.json ./
+RUN npm install --silent
+RUN npm install react-scripts@3.0.1 -g --silent
+COPY . .
+# start app
+CMD ["npm", "start"]

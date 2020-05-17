@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import serializers
 from product.models import Category, Product, Order
 
@@ -7,6 +8,8 @@ class CategoriesSerializer(serializers.ModelSerializer):
         view_name='CategoriesDetailViewSet',
         lookup_field='pk',
     )'''
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['name', 'is_active']
 
     class Meta:
         model = Category

@@ -15,8 +15,24 @@ services:
     networks:
       - neti
 
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    command: npm start
+    volumes:
+      - .:/frontend
+      - /frontend/node_modules
+    ports:
+      - '3001:3000'
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - web
+
   db:
     image: postgres:12.2
+    env_file:
+      - .env_dev
     restart: always
     environment:
       - POSTGRES_DB=store
@@ -29,3 +45,4 @@ services:
 
 networks:
   neti:
+

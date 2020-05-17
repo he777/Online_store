@@ -35,8 +35,8 @@ class ProductFilterTests(APITestCase):
         category1 = Category.objects.create(name="Category 1")
         category2 = Category.objects.create(name="Category 2")
 
-        Product.objects.create(name="Product 1", price=1, author=user1, category=category1)
-        Product.objects.create(name="Another 2", price=1, author=user1, category=category2)
+        Product.objects.create(name="Product 1", price=1, image='www.ee', author=user1, category=category1)
+        Product.objects.create(name="Another 2", price=1, image='www.uk', author=user1, category=category2)
 
     def test_filtering_by_category(self):
 
